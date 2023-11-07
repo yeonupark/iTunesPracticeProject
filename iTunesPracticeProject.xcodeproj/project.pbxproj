@@ -25,6 +25,7 @@
 		48D439712AF9235400DCEB00 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 48D439702AF9235400DCEB00 /* SnapKit */; };
 		48D439732AF9235400DCEB00 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 48D439722AF9235400DCEB00 /* SnapKit-Dynamic */; };
 		48D439762AF928C100DCEB00 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 48D439752AF928C100DCEB00 /* Alamofire */; };
+		48EA5EA82AFA8663003D5C78 /* MusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EA5EA72AFA8663003D5C78 /* MusicViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		48D439672AF9183A00DCEB00 /* MusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		48D4396B2AF91A2700DCEB00 /* SearchMusicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicModel.swift; sourceTree = "<group>"; };
 		48D4396D2AF91B3C00DCEB00 /* MusicAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicAPIManager.swift; sourceTree = "<group>"; };
+		48EA5EA72AFA8663003D5C78 /* MusicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 				48D4396A2AF91A1B00DCEB00 /* Network */,
 				48D439652AF917CC00DCEB00 /* MusicTableViewCell.swift */,
 				48D439672AF9183A00DCEB00 /* MusicViewController.swift */,
+				48EA5EA72AFA8663003D5C78 /* MusicViewModel.swift */,
 			);
 			path = Music;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				48D439682AF9183A00DCEB00 /* MusicViewController.swift in Sources */,
 				48D439302AF9138600DCEB00 /* AppDelegate.swift in Sources */,
 				48D439322AF9138600DCEB00 /* SceneDelegate.swift in Sources */,
+				48EA5EA82AFA8663003D5C78 /* MusicViewModel.swift in Sources */,
 				48D4396E2AF91B3C00DCEB00 /* MusicAPIManager.swift in Sources */,
 				48D439662AF917CC00DCEB00 /* MusicTableViewCell.swift in Sources */,
 				48D4396C2AF91A2700DCEB00 /* SearchMusicModel.swift in Sources */,

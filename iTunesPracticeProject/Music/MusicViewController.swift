@@ -23,11 +23,9 @@ class MusicViewController: UIViewController {
     
     let searchBar = UISearchBar()
     
-    var data: [MusicInfo] = []
-     
-    lazy var items = BehaviorSubject(value: data)
-    
     let disposeBag = DisposeBag()
+    
+    let viewModel = MusicViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,62 +39,27 @@ class MusicViewController: UIViewController {
      
     func bind() {
         
-        // cellforRowAt
-        items
+        searchBar
+            .rx
+            .searchButtonClicked
+            .withLatestFrom(searchBar.rx.text.orEmpty) { void, text in
+                return text
+            }
+            .flatMap{
+                MusicAPIManager.fetchData(query: $0)
+            }
+            .subscribe(with: self) { owner, value in
+                owner.viewModel.items.onNext(value.results)
+            }
+            .disposed(by: disposeBag)
+        
+        
+        viewModel.items
             .bind(to: tableView.rx.items(cellIdentifier: MusicTableViewCell.identifier, cellType: MusicTableViewCell.self)) { (row, element, cell) in
                 cell.artistLabel.text = element.artistName
                 cell.genreLabel.text = element.primaryGenreName
             }
             .disposed(by: disposeBag)
-
-        
-        let request = MusicAPIManager
-            .fetchData()
-            .asDriver(onErrorJustReturn: SearchMusicModel(resultCount: 0, results: []))
-            
-        request
-            .drive(with: self) { owner, result in
-                owner.items.onNext(result.results)
-            }
-            .disposed(by: disposeBag)
-        
-        request
-            .map { data in
-                "\(data.results.count)개의 검색 결과"
-            }
-            .drive(with: self) { owner, result in
-                owner.searchBar.text = result
-            }
-            .disposed(by: disposeBag)
-        
-        
-//        searchBar
-//            .rx
-//            .searchButtonClicked
-//            .withLatestFrom(searchBar.rx.text.orEmpty) { void, text in
-//                return text
-//            }
-//            .subscribe(with: self, onNext: { owner, text in
-//                owner.data.insert(text, at: 0)
-//                owner.items.onNext(owner.data)
-//            })
-//            .disposed(by: disposeBag)
-//        
-//        searchBar
-//            .rx
-//            .text
-//            .orEmpty
-//            .debounce(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
-//            .distinctUntilChanged()
-//            .subscribe(with: self) { owner, value in
-//                
-//                let result = value == "" ? owner.data : owner.data.filter { $0.contains(value)}
-//                owner.items.onNext(result)
-//                
-//                print("== 실시간 검색 == \(value)")
-//            }
-//            .disposed(by: disposeBag)
-        
     }
     
     private func setSearchController() {

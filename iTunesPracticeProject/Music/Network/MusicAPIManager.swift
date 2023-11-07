@@ -17,11 +17,11 @@ enum APIError: Error {
 
 class MusicAPIManager {
     
-    static func fetchData() -> Observable<SearchMusicModel> {
+    static func fetchData(query: String) -> Observable<SearchMusicModel> {
         
         return Observable<SearchMusicModel>.create { value in
             
-            let urlString = "https://itunes.apple.com/search?term=love&limit=10"
+            let urlString = "https://itunes.apple.com/search?term=\(query)&limit=10"
             
             guard let url = URL(string: urlString) else {
                 value.onError(APIError.invalidURL)
