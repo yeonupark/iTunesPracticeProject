@@ -30,7 +30,6 @@ class MusicAPIManager {
             
             URLSession.shared.dataTask(with: url) { data, response, error in
             
-            print("URLSession 성공")
             if let _ = error {
                 value.onError(APIError.unknown)
                 return
@@ -44,9 +43,7 @@ class MusicAPIManager {
             if let data = data, let musicData = try?
                 JSONDecoder().decode(SearchMusicModel.self, from: data) {
                 value.onNext(musicData)
-                print(musicData)
             }
-            print(data?.count)
         }.resume()
             
             return Disposables.create()

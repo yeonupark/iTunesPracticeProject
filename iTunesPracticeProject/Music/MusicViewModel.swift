@@ -11,7 +11,24 @@ import RxCocoa
 
 class MusicViewModel {
     
-    //var data: [MusicInfo] = []
-    lazy var items = PublishSubject<[MusicInfo]>()
-    // BehaviorSubject(value: data)
+    struct Input {
+        let text: Observable<String>
+    }
+    
+    struct Output {
+        let items : Observable<[MusicInfo]>
+    }
+    
+    func transform(input: Input) -> Output {
+        
+        let items = input.text
+            .flatMap {
+                MusicAPIManager.fetchData(query: $0)
+            }
+            .map {
+                $0.results
+            }
+        
+        return Output(items: items)
+    }
 }

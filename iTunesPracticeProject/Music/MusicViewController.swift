@@ -39,27 +39,17 @@ class MusicViewController: UIViewController {
      
     func bind() {
         
-        searchBar
-            .rx
-            .searchButtonClicked
-            .withLatestFrom(searchBar.rx.text.orEmpty) { void, text in
-                return text
-            }
-            .flatMap{
-                MusicAPIManager.fetchData(query: $0)
-            }
-            .subscribe(with: self) { owner, value in
-                owner.viewModel.items.onNext(value.results)
-            }
-            .disposed(by: disposeBag)
+        let input = MusicViewModel.Input(text: searchBar.rx.searchButtonClicked.withLatestFrom(searchBar.rx.text.orEmpty) { $1 })
         
+        let output = viewModel.transform(input: input)
         
-        viewModel.items
+        output.items
             .bind(to: tableView.rx.items(cellIdentifier: MusicTableViewCell.identifier, cellType: MusicTableViewCell.self)) { (row, element, cell) in
                 cell.artistLabel.text = element.artistName
                 cell.genreLabel.text = element.primaryGenreName
             }
             .disposed(by: disposeBag)
+        
     }
     
     private func setSearchController() {
